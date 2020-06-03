@@ -8,6 +8,10 @@ parameters:
     description: increment this value if the cache is corrupted and you want to start with a clean cache
     default: 1
     type: integer
+  os:
+    description: define which (linux-based) operating system you are using
+    default: linux
+    type: string   
 steps:
   - run:
       name: Create cache directory if it doesn't exist
@@ -23,7 +27,7 @@ steps:
         SONAR_TOKEN=$<<parameters.sonar_token_variable_name>>
         SCANNER_DIRECTORY=/tmp/cache/scanner
         export SONAR_USER_HOME=$SCANNER_DIRECTORY/.sonar
-        OS="linux"
+        OS=<<parameters.os>>
         echo $SONAR_USER_HOME
 
         if [[ ! -x "$SCANNER_DIRECTORY/sonar-scanner-$VERSION-$OS/bin/sonar-scanner" ]]; then
